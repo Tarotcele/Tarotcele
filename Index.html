@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TarotCele</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:#050505;
+  color:#f5e3a1;
+  font-family:Georgia,serif;
+  min-height:100vh;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:
+    radial-gradient(circle at 50% 0%,#241b0b 0%,#080706 35%,#030303 75%);
+  overflow:hidden;
+}
+
+header{
+  padding:22px 20px 12px;
+  text-align:center;
+  border-bottom:1px solid #6e5420;
+}
+
+.logo{
+  font-size:28px;
+  letter-spacing:6px;
+  color:#e7bd57;
+  text-shadow:0 0 12px #8c641d;
+}
+
+.subtitle{
+  margin-top:5px;
+  font-size:12px;
+  letter-spacing:3px;
+  color:#d9c78c;
+}
+
+.symbol{
+  font-size:38px;
+  margin:12px 0 4px;
+}
+
+h1{
+  font-size:25px;
+  text-align:center;
+  margin:18px 0 8px;
+  color:#e8c35d;
+}
+
+.intro{
+  text-align:center;
+  color:#cfc7ad;
+  font-size:14px;
+  margin-bottom:18px;
+}
+
+.menu{
+  padding:12px 18px 30px;
+}
+
+.option{
+  width:100%;
+  padding:17px 15px;
+  margin:9px 0;
+  border:1px solid #a77c27;
+  border-radius:16px;
+  background:linear-gradient(100deg,#090909,#17120a,#090909);
+  color:white;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  cursor:pointer;
+  box-shadow:0 0 10px #000;
+  transition:.2s;
+}
+
+.option:active{
+  transform:scale(.98);
+}
+
+.icon{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  border:1px solid #bd8d2c;
+  flex-shrink:0;
+}
+
+.option strong{
+  display:block;
+  color:#f4e0a1;
+  font-size:16px;
+}
+
+.option span{
+  display:block;
+  color:#aaa;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.arrow{
+  margin-left:auto;
+  font-size:25px;
+  color:#d5a93d;
+}
+
+.screen{
+  display:none;
+  padding:20px;
+  min-height:80vh;
+}
+
+.screen.active{
+  display:block;
+}
+
+.back{
+  color:#e1b94f;
+  border:0;
+  background:none;
+  font-size:15px;
+  margin-bottom:18px;
+  cursor:pointer;
+}
+
+.card-area{
+  display:flex;
+  justify-content:center;
+  margin:15px 0 20px;
+}
+
+.tarot-card{
+  width:180px;
+  height:290px;
+  border:4px solid #b98a2d;
+  border-radius:9px;
+  padding:9px;
+  background:#17120a;
+  box-shadow:0 0 25px #5c4315;
+}
+
+.card-inner{
+  height:100%;
+  border:1px solid #d6ae4d;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    radial-gradient(circle,#352711,#090705 65%);
+}
+
+.card-number{
+  font-size:13px;
+  color:#d6b050;
+}
+
+.card-symbol{
+  font-size:75px;
+  margin:25px 0;
+}
+
+.card-name{
+  font-size:18px;
+  color:#f2d477;
+}
+
+.result{
+  border:1px solid #8f6925;
+  border-radius:15px;
+  padding:18px;
+  background:#090807;
+  margin:15px 0;
+}
+
+.result h2{
+  color:#edca68;
+  font-size:21px;
+  margin-bottom:8px;
+}
+
+.result h3{
+  color:#e6c35e;
+  margin:12px 0 5px;
+}
+
+.result p{
+  color:#ddd5c0;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.gold-button{
+  width:100%;
+  padding:15px;
+  border-radius:30px;
+  border:1px solid #d6a93c;
+  background:linear-gradient(#261b08,#0c0905);
+  color:#f4d16d;
+  font-size:15px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.whatsapp{
+  display:block;
+  width:100%;
+  text-align:center;
+  text-decoration:none;
+  padding:15px;
+  margin-top:20px;
+  border-radius:30px;
+  background:#20b858;
+  color:white;
+  font-family:Arial,sans-serif;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:25px 15px 35px;
+  color:#8e7d55;
+  font-size:11px;
+  letter-spacing:1px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="symbol">✦</div>
+  <div class="logo">TAROT SELECT</div>
+  <div class="subtitle">TU GUÍA EN CADA PASO</div>
+</header>
+
+<!-- MENÚ PRINCIPAL -->
+
+<section id="home" class="screen active">
+
+<h1>Elegí tu tirada</h1>
+
+<p class="intro">
+Las cartas no hablan de un destino escrito.<br>
+Hablan de posibilidades.
+</p>
+
+<div class="menu">
+
+<div class="option" onclick="showScreen('dia')">
+<div class="icon">☀</div>
+<div>
+<strong>Carta del día</strong>
+<span>Una guía para hoy</span>
+</div>
+<div class="arrow">›</div>
+</div>
+
+<div class="option" onclick="tiradaTres()">
+<div class="icon">🃏</div>
+<div>
+<strong>Tirada de 3 cartas</strong>
+<span>Pasado · Presente · Futuro</span>
+</div>
+<div class="arrow">›</div>
+</div>
+
+<div class="option" onclick="siNo()">
+<div class="icon">?</div>
+<div>
+<strong>Sí o No</strong>
+<span>La respuesta que buscás</span>
+</div>
+<div class="arrow">›</div>
+</div>
+
+<div class="option" onclick="categoria('Amor')">
+<div class="icon">♡</div>
+<div>
+<strong>Tarot del amor</strong>
+<span>Tu corazón en las cartas</span>
+</div>
+<div class="arrow">›</div>
+</div>
+
+<div class="option" onclick="categoria('Dinero')">
+<div class="icon">◉</div>
+<div>
+<strong>Tarot del dinero</strong>
+<span>Abundancia y trabajo</span>
+</div>
+<div class="arrow">›</div>
+</div>
+
+<div class="option" onclick="tiradaEspecial()">
+<div class="icon">✦</div>
+<div>
+<strong>Tirada especial</strong>
+<span>Elegí tu propia pregunta</span>
+</div>
+<div class="arrow">›</div>
+</div>
+
+<a class="whatsapp"
+href="https://wa.me/543412111412"
+target="_blank">
+☏ &nbsp; ¿Querés una lectura personalizada?<br>
+Escribime por WhatsApp
+</a>
+
+</div>
+</section>
+
+
+<!-- CARTA DEL DÍA -->
+
+<section id="dia" class="screen">
+
+<button class="back" onclick="showScreen('home')">‹ Volver</button>
+
+<h1>Carta del día</h1>
+
+<p class="intro">La energía que te acompaña hoy</p>
+
+<div id="diaResultado"></div>
+
+<button class="gold-button" onclick="cartaDelDia()">
+✦ Sacar otra carta
+</button>
+
+</section>
+
+
+<!-- TIRADA 3 -->
+
+<section id="tres" class="screen">
+
+<button class="back" onclick="showScreen('home')">‹ Volver</button>
+
+<h1>Tirada de 3 cartas</h1>
+
+<p class="intro">Pasado · Presente · Futuro</p>
+
+<div id="tresResultado"></div>
+
+</section>
+
+
+<!-- SI O NO -->
+
+<section id="sino" class="screen">
+
+<button class="back" onclick="showScreen('home')">‹ Volver</button>
+
+<h1>Sí o No</h1>
+
+<p class="intro">
+Pensá mentalmente tu pregunta.
+</p>
+
+<div id="sinoResultado">
+
+<div class="card-area">
+<div class="tarot-card">
+<div class="card-inner">
+<div class="card-symbol">✦</div>
+<div class="card-name">?</div>
+</div>
+</div>
+</div>
+
+<button class="gold-button" onclick="sacarSiNo()">
+✦ Tocar carta
+</button>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORÍA -->
+
+<section id="categoria" class="screen">
+
+<button class="back" onclick="showScreen('home')">‹ Volver</button>
+
+<h1 id="categoriaTitulo">Tarot</h1>
+
+<div id="categoriaResultado"></div>
+
+<button class="gold-button" onclick="categoriaActual()">
+✦ Nueva carta
+</button>
+
+</section>
+
+
+<!-- ESPECIAL -->
+
+<section id="especial" class="screen">
+
+<button class="back" onclick="showScreen('home')">‹ Volver</button>
+
+<h1>Tirada especial</h1>
+
+<p class="intro">
+Pensá en aquello que necesitás saber.
+</p>
+
+<div id="especialResultado"></div>
+
+<button class="gold-button" onclick="tiradaEspecial()">
+✦ Consultar las cartas
+</button>
+
+</section>
+
+
+<footer>
+TAROT SELECT<br><br>
+Tu energía también importa ✦
+</footer>
+
+</div>
+
+
+<script>
+
+const cartas = [
+
+["0","EL LOCO","☁","Nuevos comienzos, libertad y aventura."],
+["I","EL MAGO","✦","Tenés herramientas para transformar tu realidad."],
+["II","LA SACERDOTISA","☾","Escuchá tu intuición. Hay algo que todavía no ves."],
+["III","LA EMPERATRIZ","♕","Creatividad, abundancia y crecimiento."],
+["IV","EL EMPERADOR","♜","Orden, autoridad y estabilidad."],
+["V","EL HIEROFANTE","✦","Aprendizaje, tradición y guía."],
+["VI","LOS ENAMORADOS","♡","Una elección importante desde el corazón."],
+["VII","EL CARRO","➤","Avance, decisión y movimiento."],
+["VIII","LA FUERZA","♘","Coraje, paciencia y dominio interior."],
+["IX","EL ERMITAÑO","☾","Necesitás mirar hacia adentro."],
+["X","LA RUEDA","◎","Los ciclos cambian. Una nueva etapa comienza."],
+["XI","LA JUSTICIA","⚖","Equilibrio, verdad y consecuencias."],
+["XII","EL COLGADO","◇","Una pausa puede ayudarte a ver diferente."],
+["XIII","LA MUERTE","✦","Transformación y cierre de una etapa."],
+["XIV","LA TEMPLANZA","☼","Equilibrio, armonía y recuperación."],
+["XV","EL DIABLO","♠","Cuidado con aquello que te ata o condiciona."],
+["XVI","LA TORRE","⚡","Una verdad puede romper viejas estructuras."],
+["XVII","LA ESTRELLA","☆","Esperanza, inspiración y renovación."],
+["XVIII","LA LUNA","☾","No todo es lo que parece. Observá tus emociones."],
+["XIX","EL SOL","☀","Claridad, alegría y energía positiva."],
+["XX","EL JUICIO","♧","Despertar, decisiones y una nueva oportunidad."],
+["XXI","EL MUNDO","◎","Cierre de ciclo, logro y realización."]
+
+];
+
+let categoriaSeleccionada="";
+
+function showScreen(id){
+
+document.querySelectorAll(".screen")
+.forEach(s=>s.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+window.scrollTo(0,0);
+
+}
+
+function cartaHTML(carta){
+
+return `
+<div class="card-area">
+
+<div class="tarot-card">
+
+<div class="card-inner">
+
+<div class="card-number">${carta[0]}</div>
+
+<div class="card-symbol">
+${carta[2]}
+</div>
+
+<div class="card-name">
+${carta[1]}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="result">
+
+<h2>${carta[1]}</h2>
+
+<p>${carta[3]}</p>
+
+</div>
+`;
+
+}
+
+
+function cartaDelDia(){
+
+showScreen("dia");
+
+let carta=
+cartas[Math.floor(Math.random()*cartas.length)];
+
+document.getElementById("diaResultado")
+.innerHTML=cartaHTML(carta);
+
+}
+
+function tiradaTres(){
+
+showScreen("tres");
+
+let a=[...cartas]
+.sort(()=>Math.random()-.5)
+.slice(0,3);
+
+document.getElementById("tresResultado")
+.innerHTML=`
+
+${cartaHTML(a[0])}
+
+<div class="result">
+<h3>✦ PASADO</h3>
+<p>${a[0][3]}</p>
+</div>
+
+${cartaHTML(a[1])}
+
+<div class="result">
+<h3>✦ PRESENTE</h3>
+<p>${a[1][3]}</p>
+</div>
+
+${cartaHTML(a[2])}
+
+<div class="result">
+<h3>✦ FUTURO</h3>
+<p>${a[2][3]}</p>
+</div>
+`;
+
+}
+
+
+function siNo(){
+
+showScreen("sino");
+
+document.getElementById("sinoResultado").innerHTML=`
+
+<div class="card-area">
+
+<div class="tarot-card">
+
+<div class="card-inner">
+
+<div class="card-symbol">?</div>
+
+<div class="card-name">
+Pensá tu pregunta
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<button class="gold-button" onclick="sacarSiNo()">
+✦ Tocar carta
+</button>
+`;
+
+}
+
+
+function sacarSiNo(){
+
+let respuestas=[
+["SÍ","El camino está abierto. Actuá con confianza."],
+["SÍ","Hay energía favorable para avanzar."],
+["NO","Por ahora es mejor esperar y observar."],
+["NO","Hay obstáculos que primero necesitás resolver."],
+["TAL VEZ","La respuesta depende de una decisión que todavía falta tomar."]
+];
+
+let r=
+respuestas[Math.floor(Math.random()*respuestas.length)];
+
+document.getElementById("sinoResultado").innerHTML=`
+
+<div class="card-area">
+
+<div class="tarot-card">
+
+<div class="card-inner">
+
+<div class="card-symbol">✦</div>
+
+<div class="card-name">
+${r[0]}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="result">
+
+<h2>${r[0]}</h2>
+
+<p>${r[1]}</p>
+
+<br>
+
+<p>
+Recordá: el Tarot es una herramienta de reflexión
+y orientación, no una sentencia sobre tu futuro.
+</p>
+
+</div>
+
+<button class="gold-button" onclick="siNo()">
+✦ Nueva pregunta
+</button>
+`;
+
+}
+
+
+function categoria(nombre){
+
+categoriaSeleccionada=nombre;
+
+document.getElementById("categoriaTitulo")
+.innerText="Tarot del "+nombre.toLowerCase();
+
+showScreen("categoria");
+
+categoriaActual();
+
+}
+
+
+function categoriaActual(){
+
+let carta=
+cartas[Math.floor(Math.random()*cartas.length)];
+
+document.getElementById("categoriaResultado")
+.innerHTML=cartaHTML(carta)+`
+
+<div class="result">
+
+<h3>${categoriaSeleccionada}</h3>
+
+<p>
+Esta carta muestra una energía que puede ayudarte
+a reflexionar sobre tu situación.
+</p>
+
+</div>
+`;
+
+}
+
+
+function tiradaEspecial(){
+
+showScreen("especial");
+
+let carta=
+cartas[Math.floor(Math.random()*cartas.length)];
+
+document.getElementById("especialResultado")
+.innerHTML=cartaHTML(carta)+`
+
+<div class="result">
+
+<h3>MENSAJE PARA VOS</h3>
+
+<p>
+${carta[3]}
+</p>
+
+</div>
+`;
+
+}
+
+cartaDelDia();
+
+</script>
+
+</body>
+</html>
